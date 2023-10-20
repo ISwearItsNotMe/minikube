@@ -1,10 +1,26 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { UnitsModule } from './units/units.module';
+import { RecipesModule } from './recipes/recipes.module';
+import { IngredientsModule } from './ingredients/ingredients.module';
+import { CategoriesModule } from './categories/categories.module';
+import { TypeOrmModule } from '@nestjs/typeorm/dist/typeorm.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    CategoriesModule,
+    RecipesModule,
+    IngredientsModule,
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'minikube_user',
+      password: 'minikube_password',
+      database: 'minikube_recipes',
+      synchronize: false,
+      autoLoadEntities: true,
+    }),
+    UnitsModule,
+  ],
 })
 export class AppModule {}
