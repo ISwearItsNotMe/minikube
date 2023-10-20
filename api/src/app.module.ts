@@ -17,7 +17,7 @@ import { TypeOrmModule } from '@nestjs/typeorm/dist/typeorm.module';
       username: 'minikube_user',
       password: 'minikube_password',
       database: 'minikube_recipes',
-      synchronize: false,
+      synchronize: true,
       autoLoadEntities: true,
     }),
     UnitsModule,
