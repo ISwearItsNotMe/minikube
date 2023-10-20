@@ -12,7 +12,7 @@ import { TypeOrmModule } from '@nestjs/typeorm/dist/typeorm.module';
     IngredientsModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
+      host: 'minikube_db',
       port: 5432,
       username: 'minikube_user',
       password: 'minikube_password',

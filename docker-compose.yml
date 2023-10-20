@@ -1,0 +1,51 @@
+version: "1.0.0"
+
+services:
+  api:
+    container_name: minikube_api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    depends_on:
+      - db
+    networks:
+      - minikube
+
+  frontend:
+    container_name: minikube_frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
+    depends_on:
+      - api
+    networks:
+      - minikube
+
+  db:
+    container_name: minikube_db
+    image: postgres:12.1 # Always use a specific version tag, never latest
+    environment:
+      POSTGRES_USER: minikube_user
+      POSTGRES_PASSWORD: minikube_password
+      POSTGRES_DB: minikube_recipes
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    volumes:
+      - db_data:/var/lib/postgresql/data # Persist data even if container shuts down
+    networks:
+      - minikube
+
+# Link containers together
+networks:
+  minikube:
+    driver: bridge
+
+volumes:
+  db_data:
