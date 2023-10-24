@@ -1,6 +1,13 @@
 import { Ingredient } from 'src/ingredients/entities/ingredient.entity';
-import { Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  Entity,
+  JoinTable,
+} from 'typeorm';
 
+@Entity()
 export class Recipe {
   @PrimaryGeneratedColumn()
   public id: number;
@@ -8,8 +15,7 @@ export class Recipe {
   @Column({ unique: true, nullable: false, length: 50 })
   public name: string;
 
-  @Column({ nullable: false, length: 50 })
-  @OneToMany(() => Ingredient, (ingredient) => ingredient.unit)
+  @ManyToMany(() => Ingredient)
   public ingredients: Ingredient[];
 
   @Column({ nullable: false, length: 50 })

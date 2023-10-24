@@ -75,4 +75,14 @@ export class IngredientsService {
     }
     return { removed: true };
   }
+
+  async findByIds(ids: number[]) {
+    const ingredients = await this.ingredientsRepository
+      .createQueryBuilder('i')
+      .whereInIds(ids)
+      .andWhere('i.removed = false')
+      .getMany();
+
+    return ingredients;
+  }
 }
