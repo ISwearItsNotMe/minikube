@@ -19,5 +19,6 @@ COPY --from=build /usr/src/app/build /usr/share/nginx/html
 
 # We expose to the port 3001 and start the server
 EXPOSE 3001
-RUN echo "server { listen 3001; location / { root /usr/share/nginx/html; try_files \$uri \$uri/ =404; }}" > /etc/nginx/conf.d/default.conf
+RUN echo "server { listen 3001; location / { root /usr/share/nginx/html; index index.html index.htm; try_files \$uri \$uri/ /index.html; }}" > /etc/nginx/conf.d/default.conf
+
 CMD ["nginx", "-g", "daemon off;"]
