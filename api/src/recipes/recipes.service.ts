@@ -18,13 +18,15 @@ export class RecipesService {
     private ingredientsService: IngredientsService,
   ) {}
 
-  async create(createRecipeDto: CreateRecipeDto): Promise<Recipe> {
-    return this.recipesRepository.save({
+  async create(createRecipeDto: CreateRecipeDto) {
+    let recipe = await this.recipesRepository.save({
       ...createRecipeDto,
       removed: false,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
+    console.log(recipe.id);
+    return recipe.id;
   }
 
   async findAll() {
@@ -80,6 +82,7 @@ export class RecipesService {
     return this.recipeIngredientsRepository
       .createQueryBuilder('ri')
       .select('ri.ingredientId')
+      .addSelect('ri.quantity')
       .where('ri.recipeId = :id', { id: id })
       .getMany();
   }
@@ -87,9 +90,10 @@ export class RecipesService {
   async setIngredientForRecipe(
     recipeId: number,
     ingredientIds: number[],
+    quantities: number[],
   ): Promise<RecipeIngredient[]> {
     await this.findOne(recipeId);
-    if (!Array.isArray(ingredientIds)) {
+    if (!Array.isArray(ingredientIds) || !Array.isArray(quantities)) {
       throw new Error('ingredientIds must be an array');
     }
     const ingredients = await this.ingredientsService.findByIds(ingredientIds);
@@ -113,6 +117,8 @@ export class RecipesService {
       const recipeIngredientRecord = new RecipeIngredient();
       recipeIngredientRecord.recipeId = recipeId;
       recipeIngredientRecord.ingredientId = ingredientId;
+      recipeIngredientRecord.quantity =
+        quantities[ingredientIds.indexOf(ingredientId)];
       return recipeIngredientRecord;
     });
 

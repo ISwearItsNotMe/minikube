@@ -39,17 +39,7 @@ function UnitsList() {
       : [];
 
   return (
-    <div
-      style={{
-        color: "white",
-        width: "100%",
-        height: "98vh",
-        paddingTop: "2vh",
-        display: "flex",
-        rowGap: "1vh",
-        flexDirection: "column",
-      }}
-    >
+    <>
       <h1
         style={{
           textAlign: "center",
@@ -129,7 +119,7 @@ function UnitsList() {
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

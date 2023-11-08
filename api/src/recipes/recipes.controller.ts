@@ -9,9 +9,10 @@ export class RecipesController {
   constructor(private readonly recipesService: RecipesService) {}
 
   @Post()
-  async create(@Body() createRecipeDto: CreateRecipeDto): Promise<RecipeDto> {
-    const recipe = await this.recipesService.create(createRecipeDto);
-    return new RecipeDto(recipe);
+  async create(@Body() createRecipeDto: CreateRecipeDto) {
+    const recipeId = await this.recipesService.create(createRecipeDto);
+    console.log(recipeId)
+    return recipeId;
   }
 
   @Get()
@@ -46,11 +47,13 @@ export class RecipesController {
   @Post('/ingredients/:id')
   async addIngredientToRecipe(
     @Param('id') id: string,
-    @Body('ingredientsIds') ingredientsIds: number[],
+    @Body('ingredientIds') ingredientIds: number[],
+    @Body('quantities') quantities: number[],
   ) {
     return await this.recipesService.setIngredientForRecipe(
       +id,
-      ingredientsIds,
+      ingredientIds,
+      quantities,
     );
   }
 }

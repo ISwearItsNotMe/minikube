@@ -34,7 +34,7 @@ function Unit({ id, onSave, onDelete, mode }: any) {
 
   const handleDelete = async () => {
     try {
-      await deleteData(`/units/${id}`);
+      await deleteData(`/units/delete/${id}`);
       onDelete(id as number);
     } catch (error) {
       console.log(error);

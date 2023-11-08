@@ -34,7 +34,7 @@ function Category({ id, onSave, onDelete, mode }: any) {
 
   const handleDelete = async () => {
     try {
-      await deleteData(`/categories/${id}`);
+      await deleteData(`/categories/delete/${id}`);
       onDelete(id as number);
     } catch (error) {
       console.log(error);

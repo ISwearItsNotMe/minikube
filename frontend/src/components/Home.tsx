@@ -1,9 +1,19 @@
-import React from 'react'
+import React from "react";
 
 function Home() {
   return (
-    <div>First page</div>
-  )
+    <div
+      style={{
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      A recipes application working with Docker and Kubernetes with Minikube
+    </div>
+  );
 }
 
-export default Home
+export default Home;
